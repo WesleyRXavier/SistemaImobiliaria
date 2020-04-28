@@ -21,17 +21,17 @@
     <div class="dash_content_app_box">
         <div class="nav">
             @if($errors->all())
-                @foreach( $errors->all() as $error)
-                  @message(['color'=>'orange'])
-                      <p class="icon-asterisk">{{$error}}</p>
-                  @endmessage
-                @endforeach
+            @foreach( $errors->all() as $error)
+            @message(['color'=>'orange'])
+            <p class="icon-asterisk">{{$error}}</p>
+            @endmessage
+            @endforeach
 
             @endif
             @if(session()->exists('message'))
-                    @message(['color' => session()->get('color')])
-                        <p class="icon-asterisk">{{session()->get('message')}}</p>
-                    @endmessage
+            @message(['color' => session()->get('color')])
+            <p class="icon-asterisk">{{session()->get('message')}}</p>
+            @endmessage
             @endif
 
             <ul class="nav_tabs">
@@ -52,6 +52,7 @@
             <form class="app_form" action="{{route('admin.users.update',['user'=>$user->id])}}" method="post" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
+                <input type="hidden" name="id" value="{{$user->id}}">
                 <div class="nav_tabs_content">
                     <div id="data">
                         <div class="label_gc">
