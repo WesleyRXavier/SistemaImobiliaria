@@ -28,8 +28,8 @@ class User extends FormRequest
             //dados pessoais
             'name'=>'required|min:3|max:191',
             'genre'=>'in:male,female,other',
-            'document'=>'required|min:11|max:14|unique:users',
-            'document_secondary'=>'required|min:8|max:12',
+            'document'=>'required|min:11|max:14',
+            'document_secondary'=>'required|min:7|max:12',
             'document_secondary_complement'=>'required',
             'date_of_birth'=>'required|date_format:d/m/Y',
             'civil_status'=>'required|in:married,separated,single,divorced,widower',
@@ -42,7 +42,7 @@ class User extends FormRequest
             //aba endereco
             'zipcode'=>'required|min:8|max:9',
             'street'=>'required',
-            'number'=>'required|min:3|max:191',
+            'number'=>'required',
             'neighborhood'=>'required',
             'state'=>'required',
             'city'=>'required',
@@ -51,14 +51,14 @@ class User extends FormRequest
             'cell'=>'required',
 
             //aba acesso
-            'email'=>'required|email|unique::users',
-
+            'email'=>'required|email',
+            'password'=>'required',
             //aba conjugue
            'type_of_communion'=>'required_if:civil_status, married,separated|in:Comunhão Universal de Bens,Comunhão Parcial de Bens,Separação Total de Bens,Participação Final de Aquestos',
-            'spouse_name'=>'required_if:civil_status, married,separated|min:3|max:191',
+            'spouse_name'=>'required_if:civil_status,married,separated|min:3|max:191',
             'spouse_genre'=>'required_if:civil_status,married,separated|in:male,female,other',
-            'spouse_document'=>'required_if:civil_status, married,separated|min:11|max:14|unique:users',
-            'spouse_document_secondary'=>'required_if:civil_status,married,separated|min:8|max:12',
+            'spouse_document'=>'required_if:civil_status, married,separated|min:11|max:14',
+            'spouse_document_secondary'=>'required_if:civil_status,married,separated|min:7|max:12',
             'spouse_document_secondary_complement'=>'required_if:civil_status,married,separated',
             'spouse_date_of_birth'=>'required_if:civil_status, married,separated|date_format:d/m/Y',
             'spouse_occupation'=>'required_if:civil_status, married,separated',
