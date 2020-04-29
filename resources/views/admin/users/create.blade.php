@@ -20,6 +20,7 @@
 
     <div class="dash_content_app_box">
         <div class="nav">
+            
             @if($errors->all())
             @foreach( $errors->all() as $error)
             @message(['color'=>'orange'])

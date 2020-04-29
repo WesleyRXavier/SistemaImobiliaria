@@ -76,6 +76,15 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    //relacionamentos
+    public function companies(){
+        return $this->hasMany(Company::class, 'user', 'id');
+
+    }
+
+
+
+
     //retorna a url da foto
     public function getUrlCoverAttribute()
     {
