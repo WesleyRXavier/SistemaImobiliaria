@@ -13,6 +13,9 @@ Route::group(['prefix'=>'admin','namespace'=>'Admin', 'as'=> 'admin.'],function(
 
         //rotas empresa
         Route::resource('companies','CompanyController' );
+
+        //rotas empresa
+        Route::resource('properties','PropertyController' );
         
     });
     

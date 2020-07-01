@@ -11,6 +11,10 @@ class AuthController extends Controller
 {
     public function showLoginForm()
     {
+     //   $user = User::where('id', 1);
+    //    $user->password = bcrypt('123');
+      //   dd($user);
+     //   $user->save();
         if(Auth::check()===true){
             return redirect()->route('admin.home');
         }

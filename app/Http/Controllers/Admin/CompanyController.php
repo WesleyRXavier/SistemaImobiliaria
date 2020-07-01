@@ -51,6 +51,8 @@ class CompanyController extends Controller
     public function store(CompanyRequest $request)
     {
         $companyCreate = Company::create($request->all());
+        return redirect()->route('admin.companies.index');
+            
         
         
     }
