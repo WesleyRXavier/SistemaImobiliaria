@@ -13,10 +13,14 @@ Route::group(['prefix'=>'admin','namespace'=>'Admin', 'as'=> 'admin.'],function(
 
         //rotas empresa
         Route::resource('companies','CompanyController' );
+ /** Imóveis */
+ Route::post('properties/image-set-cover', 'PropertyController@imageSetCover')->name('properties.imageSetCover');
+ Route::delete('properties/image-remove', 'PropertyController@imageRemove')->name('properties.imageRemove');
+ Route::resource('properties', 'PropertyController');
 
-        //rotas empresa
-        Route::resource('properties','PropertyController' );
-        
+        //rotas imagems imoveis
+        Route::post('properties/image-set-cover','PropertyController@imageSetCover' )->name('properties.imageSetCover');
+        Route::delete('properties/image-remove','PropertyController@imageRemove' )->name('properties.imageRemove');
     });
     
 

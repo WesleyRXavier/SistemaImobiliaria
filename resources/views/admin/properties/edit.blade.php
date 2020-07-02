@@ -70,9 +70,9 @@
                             <label class="label">
                                 <span class="legend">Categoria:</span>
                                 <select name="category" class="select2">
-                                    <option value="residential_property" {{ (old('category')=='residential_property'  ? 'selected':($property->category=='residential_property' ? 'selected' :'')) }}>Imóvel Residencial</option>
-                                    <option value="commercial_industrial" {{ (old('category')=='commercial_industrial'  ? 'selected':($property->category=='commercial_industrial' ? 'selected' :'')) }}>Comercial/Industrial</option>
-                                    <option value="terrain" {{ (old('category')=='terrain'  ? 'selected':($property->category=='terrain' ? 'selected' :'')) }}>Terreno</option>
+                                    <option value="Imóvel Residencial" {{ (old('category')=='Imóvel Residencia'  ? 'selected':($property->category=='Imóvel Residencial' ? 'selected' :'')) }}>Imóvel Residencial</option>
+                                    <option value="Comercial/Industrial" {{ (old('category')=='Comercial/Industrial'  ? 'selected':($property->category=='Comercial/Industrial' ? 'selected' :'')) }}>Comercial/Industrial</option>
+                                    <option value="Terreno" {{ (old('category')=='terrain'  ? 'selected':($property->category=='Terreno' ? 'selected' :'')) }}>Terreno</option>
                                 </select>
                             </label>
 
@@ -80,19 +80,19 @@
                                 <span class="legend">Tipo:</span>
                                 <select name="type" class="select2">
                                     <optgroup label="Imóvel Residencial">
-                                        <option value="home"  {{ (old('type')=='home'  ? 'selected':($property->type=='home' ? 'selected' :''))  }}>Casa</option>
-                                        <option value="roof"  {{ (old('type')=='roof'  ? 'selected':($property->type=='roof' ? 'selected' :'')) }}>Cobertura</option>
-                                        <option value="apartment"  {{ (old('type')=='apartment'  ? 'selected':($property->type =='apartment' ? 'selected' :''))}}>Apartamento</option>
-                                        <option value="studio"  {{ (old('type')=='studio'  ? 'selected':($property->type=='studio' ? 'selected' :''))}}>Studio</option>
-                                        <option value="kitnet"  {{ (old('type')=='kitnet'  ? 'selected':($property->type=='kitnet' ? 'selected' :'')) }}>Kitnet</option>
+                                        <option value="Casa"  {{ (old('type')=='Casa'  ? 'selected':($property->type=='Casa' ? 'selected' :''))  }}>Casa</option>
+                                        <option value="Cobertura"  {{ (old('type')=='Cobertura'  ? 'selected':($property->type=='Cobertura' ? 'selected' :'')) }}>Cobertura</option>
+                                        <option value="Apartamento"  {{ (old('type')=='Apartamento'  ? 'selected':($property->type =='Apartamento' ? 'selected' :''))}}>Apartamento</option>
+                                        <option value="Studio"  {{ (old('type')=='Studio'  ? 'selected':($property->type=='Studio' ? 'selected' :''))}}>Studio</option>
+                                        <option value="Kitnet"  {{ (old('type')=='Kitnet'  ? 'selected':($property->type=='Kitnet' ? 'selected' :'')) }}>Kitnet</option>
                                     </optgroup>
                                     <optgroup label="Comercial/Industrial">
-                                        <option value="commercial_room"  {{ (old('type')=='commercial_room'  ? 'selected':($property->type=='commercial_room' ? 'selected' :''))}}>Sala Comercial</option>
-                                        <option value="deposit_shed"  {{ (old('type')=='deposit_shed'  ? 'selected':($property->type=='deposit_shed' ? 'selected' :''))}}>Depósito/Galpão</option>
-                                        <option value="commercial_point"  {{ (old('type')=='commercial_point'  ? 'selected':($property->type=='commercial_point' ? 'selected' :'')) }}>Ponto Comercial</option>
+                                        <option value="Sala Comercial"  {{ (old('type')=='Sala Comercial'  ? 'selected':($property->type=='Sala Comercial' ? 'selected' :''))}}>Sala Comercial</option>
+                                        <option value="Depósito/Galpão"  {{ (old('type')=='Depósito/Galpão'  ? 'selected':($property->type=='Depósito/Galpão' ? 'selected' :''))}}>Depósito/Galpão</option>
+                                        <option value="Ponto Comercial"  {{ (old('type')=='Ponto Comercial'  ? 'selected':($property->type=='Ponto Comercial' ? 'selected' :'')) }}>Ponto Comercial</option>
                                     </optgroup>
                                     <optgroup label="Terreno">
-                                        <option value="terrain"  {{ (old('type')=='terrain'  ? 'selected':($property->type=='terrain' ? 'selected' :''))}}>Terreno</option>
+                                        <option value="Terreno"  {{ (old('type')=='Terreno'  ? 'selected':($property->type=='Terreno' ? 'selected' :''))}}>Terreno</option>
                                     </optgroup>
                                 </select>
                             </label>
@@ -100,9 +100,11 @@
 
                         <label class="label">
                             <span class="legend">Proprietário:</span>
-                            <select name="user" class="select2">
-                                <option value="1">wesley</option>
-                                <option value="">Nome (documento)</option>
+                            <select name="user" class="select2">                              
+                                <option value="">Selecione o Proprietário</option>
+                                @foreach ($users as $user)
+                                <option value="{{ $user->id }}" {{ $user->id ===$property->user ? 'selected': '' }}>{{ $user->name }} ({{ $user->document }})</option>
+                                @endforeach
                             </select>
                         </label>
 
@@ -346,12 +348,28 @@
                         </label>
 
                         <div class="content_image"></div>
+                        <div class="property_image">
+                            @foreach($property->images()->get() as $image)
+                            <div class="property_image_item">
+                                <img src="{{ $image->url_cropped }}" alt="">
+                                <div class="property_image_actions">
+                                    <a href="javascript:void(0)"
+                                       class="btn btn-small {{ ($image->cover == true ? 'btn-green' : '') }} icon-check icon-notext image-set-cover"
+                                       data-action="{{ route('admin.properties.imageSetCover', ['image' => $image->id]) }}"></a>
+                                    <a href="javascript:void(0)"
+                                       class="btn btn-red btn-small icon-times icon-notext image-remove"
+                                       data-action="{{ route('admin.properties.imageRemove', ['image' => $image->id]) }}"></a>
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
 
                 <div class="text-right mt-2">
                     <button class="btn btn-large btn-green icon-check-square-o">Salvar Imóvel</button>
                 </div>
+                
             </form>
         </div>
     </div>
@@ -361,25 +379,66 @@
 
 
 @section('js')
-<script>
-    $(function () {
-        $('input[name="files[]"]').change(function (files) {
 
-            $('.content_image').text('');
+    <script>
+        $(function () {
 
-            $.each(files.target.files, function (key, value) {
-                var reader = new FileReader();
-                reader.onload = function (value) {
-                    $('.content_image').append(
-                        '<div class="property_image_item">' +
-                        '<div class="embed radius" ' +
-                        'style="background-image: url(' + value.target.result + '); background-size: cover; background-position: center center;">' +
-                        '</div>' +
-                        '</div>');
-                };
-                reader.readAsDataURL(value);
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $('input[name="files[]"]').change(function (files) {
+
+                $('.content_image').text('');
+
+                $.each(files.target.files, function (key, value) {
+                    var reader = new FileReader();
+                    reader.onload = function (value) {
+                        $('.content_image').append(
+                            '<div class="property_image_item">' +
+                            '<div class="embed radius" ' +
+                            'style="background-image: url(' + value.target.result + '); background-size: cover; background-position: center center;">' +
+                            '</div>' +
+                            '</div>');
+                    };
+                    reader.readAsDataURL(value);
+                });
+            });
+
+            $('.image-set-cover').click(function(event){
+                event.preventDefault();
+
+                var button = $(this);
+
+                $.post(button.data('action'), {}, function(response){
+                    if(response.success === true) {
+                        $('.property_image').find('a.btn-green').removeClass('btn-green');
+                        button.addClass('btn-green');
+                    }
+                }, 'json');
+            });
+
+            $('.image-remove').click(function(event){
+                event.preventDefault();
+
+                var button = $(this);
+
+                $.ajax({
+                    url: button.data('action'),
+                    type: 'DELETE',
+                    dataType: 'json',
+                    success: function(response){
+
+                        if(response.success === true) {
+                            button.closest('.property_image_item').fadeOut(function(){
+                                $(this).remove();
+                            });
+                        }
+                    }
+                });
             });
         });
-    });
-</script>
+    </script>
 @endsection

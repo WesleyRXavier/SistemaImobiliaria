@@ -6,7 +6,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Storage;
-use\App\Support\Cropper;
+use App\Support\Cropper;
 
 class User extends Authenticatable
 {
@@ -79,6 +79,10 @@ class User extends Authenticatable
     //relacionamentos
     public function companies(){
         return $this->hasMany(Company::class, 'user', 'id');
+
+    }
+    public function properties(){
+        return $this->hasMany(Property::class, 'user', 'id');
 
     }
 

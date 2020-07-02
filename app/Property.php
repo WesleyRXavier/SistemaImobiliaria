@@ -5,8 +5,10 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use App\Support\Cropper;
 
 class Property extends Model
+
 {
     protected $fillable = [
         'sale',
