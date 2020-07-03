@@ -1,27 +1,34 @@
 <?php
 
-Route::group(['prefix'=>'admin','namespace'=>'Admin', 'as'=> 'admin.'],function(){
-    Route::get('/','AuthController@showLoginForm')->name('login');
-    Route::post('login','AuthController@login')->name('autenticar');
-    Route::get('logout','AuthController@logout')->name('logout');
-    
-    //rotas protegidas
-    Route::group(['middleware'=>['auth']],function(){
-        Route::get('home','AuthController@home')->name('home');
-        Route::get('users/team','UserController@team')->name('users.team');
-        Route::resource('users','UserController' );
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'as' => 'admin.'], function () {
+        Route::get('/', 'AuthController@showLoginForm')->name('login');
+        Route::post('login', 'AuthController@login')->name('autenticar');
+        Route::get('logout', 'AuthController@logout')->name('logout');
 
-        //rotas empresa
-        Route::resource('companies','CompanyController' );
- /** Imóveis */
- Route::post('properties/image-set-cover', 'PropertyController@imageSetCover')->name('properties.imageSetCover');
- Route::delete('properties/image-remove', 'PropertyController@imageRemove')->name('properties.imageRemove');
- Route::resource('properties', 'PropertyController');
+        //rotas protegidas
+        Route::group(['middleware' => ['auth']], function () {
+                Route::get('home', 'AuthController@home')->name('home');
+                Route::get('users/team', 'UserController@team')->name('users.team');
+                Route::resource('users', 'UserController');
 
-        //rotas imagems imoveis
-        Route::post('properties/image-set-cover','PropertyController@imageSetCover' )->name('properties.imageSetCover');
-        Route::delete('properties/image-remove','PropertyController@imageRemove' )->name('properties.imageRemove');
-    });
-    
+                //rotas empresa
+                Route::resource('companies', 'CompanyController');
+
+                /** Imóveis */
+                Route::post('properties/image-set-cover', 'PropertyController@imageSetCover')->name('properties.imageSetCover');
+                Route::delete('properties/image-remove', 'PropertyController@imageRemove')->name('properties.imageRemove');
+                Route::resource('properties', 'PropertyController');
+
+                //rotas imagems imoveis
+                Route::post('properties/image-set-cover', 'PropertyController@imageSetCover')->name('properties.imageSetCover');
+                Route::delete('properties/image-remove', 'PropertyController@imageRemove')->name('properties.imageRemove');
+
+                //Contract
+                Route::post('contracts/get-data-owner', 'ContractController@getDataOwner')->name('contracts.getDataOwner');
+                Route::post('contracts/get-data-acquirer', 'ContractController@getDataAcquirer')->name('contracts.getDataAcquirer');
+                Route::post('contracts/get-data-property', 'ContractController@getDataProperty')->name('contracts.getDataProperty');
+
+                Route::resource('contracts', 'ContractController');
+        });
 
 });

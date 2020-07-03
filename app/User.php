@@ -98,6 +98,15 @@ class User extends Authenticatable
         return '';
     }
 
+    public function scopeLessors($query){
+        return $query->where('lessor', true);
+
+    }
+    public function scopeLessees($query){
+        return $query->where('lessee', true);
+
+    }
+
     public function setLessorAttribute($value)
     {
         //operador ternario pra indicar o valor de lessor pq no banco so pode ser 0 ou 1
