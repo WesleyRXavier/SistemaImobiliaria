@@ -35,6 +35,7 @@ class User extends FormRequest
             'document_secondary_complement'=>'required',
             'date_of_birth'=>'required|date_format:d/m/Y',
             'civil_status'=>'required|in:married,separated,single,divorced,widower',
+            'cover'=>'image',
 
             //aba renda
             'occupation'=>'required',

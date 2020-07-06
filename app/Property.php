@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Storage;
 use App\Support\Cropper;
 
 class Property extends Model
-
 {
     protected $fillable = [
         'sale',
@@ -52,8 +51,16 @@ class Property extends Model
         'pool',
         'steam_room',
         'view_of_the_sea',
-        'status'
+        'status',
+        'title',
+        'slug',
+        'headline',
+        'experience'
     ];
+
+    /**
+     * Relacionamentos
+     */
 
     public function user()
     {
@@ -65,6 +72,34 @@ class Property extends Model
         return $this->hasMany(PropertyImage::class, 'property', 'id')
             ->orderBy('cover', 'ASC');
     }
+
+    /**
+     * Scopes
+     */
+
+    public function scopeAvailable($query)
+    {
+        return $query->where('status', 1);
+    }
+
+    public function scopeUnavailable($query)
+    {
+        return $query->where('status', 0);
+    }
+
+    public function scopeSale($query)
+    {
+        return $query->where('sale', 1);
+    }
+
+    public function scopeRent($query)
+    {
+        return $query->where('rent', 1);
+    }
+
+    /**
+     * Accerssors and Mutators
+     */
 
     public function cover()
     {
@@ -81,16 +116,6 @@ class Property extends Model
         }
 
         return Storage::url(Cropper::thumb($cover['path'], 1366, 768));
-    }
-
-    public function scopeAvailable($query)
-    {
-        return $query->where('status', 1);
-    }
-
-    public function scopeUnavailable($query)
-    {
-        return $query->where('status', 0);
     }
 
     public function setSaleAttribute($value)
@@ -110,58 +135,72 @@ class Property extends Model
 
     public function setSalePriceAttribute($value)
     {
-        if(empty($value)){
-            $this->attributes['sale_price'] = null;
-        } else {
-            $this->attributes['sale_price'] = floatval($this->convertStringToDouble($value));
-        }
+        $this->attributes['sale_price'] = (!empty($value) ? floatval($this->convertStringToDouble($value)) : null);
     }
 
     public function getSalePriceAttribute($value)
     {
+        if (empty($value)) {
+            return null;
+        }
+
         return number_format($value, 2, ',', '.');
     }
 
     public function setRentPriceAttribute($value)
     {
-        if(empty($value)){
-            $this->attributes['rent_price'] = null;
-        } else {
-            $this->attributes['rent_price'] = floatval($this->convertStringToDouble($value));
-        }
+        $this->attributes['rent_price'] = (!empty($value) ? floatval($this->convertStringToDouble($value)) : null);
     }
 
     public function getRentPriceAttribute($value)
     {
+        if (empty($value)) {
+            return null;
+        }
+
         return number_format($value, 2, ',', '.');
     }
 
     public function setTributeAttribute($value)
     {
-        if(empty($value)){
-            $this->attributes['tribute'] = null;
-        } else {
-            $this->attributes['tribute'] = floatval($this->convertStringToDouble($value));
-        }
+        $this->attributes['tribute'] = (!empty($value) ? floatval($this->convertStringToDouble($value)) : null);
     }
 
     public function getTributeAttribute($value)
     {
+        if (empty($value)) {
+            return null;
+        }
+
         return number_format($value, 2, ',', '.');
     }
 
     public function setCondominiumAttribute($value)
     {
-        if(empty($value)){
-            $this->attributes['condominium'] = null;
-        } else {
-            $this->attributes['condominium'] = floatval($this->convertStringToDouble($value));
-        }
+        $this->attributes['condominium'] = (!empty($value) ? floatval($this->convertStringToDouble($value)) : null);
     }
 
     public function getCondominiumAttribute($value)
     {
+        if (empty($value)) {
+            return null;
+        }
+
         return number_format($value, 2, ',', '.');
+    }
+
+    public function setZipcodeAttribute($value)
+    {
+        $this->attributes['zipcode'] = (!empty($value) ? $this->clearField($value) : null);
+    }
+
+    public function getZipcodeAttribute($value)
+    {
+        if (empty($value)) {
+            return null;
+        }
+
+        return substr($value, 0, 5) . '-' . substr($value, 5, 3);
     }
 
     /**
@@ -324,6 +363,14 @@ class Property extends Model
         $this->attributes['view_of_the_sea'] = (($value === true || $value === 'on') ? 1 : 0);
     }
 
+    public function setSlug()
+    {
+        if(!empty($this->title)){
+            $this->attributes['slug'] = str_slug($this->title) . '-' . $this->id;
+            $this->save();
+        }
+    }
+
     private function convertStringToDouble($param)
     {
         if(empty($param)){
@@ -331,5 +378,14 @@ class Property extends Model
         }
 
         return str_replace(',', '.', str_replace('.', '', $param));
+    }
+
+    private function clearField(?string $param)
+    {
+        if(empty($param)){
+            return null;
+        }
+
+        return str_replace(['.', '-', '/', '(', ')', ' '], '', $param);
     }
 }

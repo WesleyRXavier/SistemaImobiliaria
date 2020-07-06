@@ -1,11 +1,19 @@
 {
+    "/frontend/assets/css/bootstrap.css": "/frontend/assets/css/bootstrap.css?id=c911d087ac160a470eae",
+    "/frontend/assets/css/app.css": "/frontend/assets/css/app.css?id=9ec24faefab0f97d963f",
     "/backend/assets/css/reset.css": "/backend/assets/css/reset.css?id=3537f958f4cc0649ea1b",
     "/backend/assets/css/boot.css": "/backend/assets/css/boot.css?id=09d70ea1447350e734d2",
     "/backend/assets/css/login.css": "/backend/assets/css/login.css?id=06a16240f7cb4229bf9f",
     "/backend/assets/css/style.css": "/backend/assets/css/style.css?id=ba3beb82a3a9605969e6",
+    "/frontend/assets/libs/libs.css": "/frontend/assets/libs/libs.css?id=9814a8f6ef2b4cf492a7",
+    "/frontend/assets/js/jquery.js": "/frontend/assets/js/jquery.js?id=a09e13ee94d51c524b7e",
+    "/frontend/assets/js/bootstrap.js": "/frontend/assets/js/bootstrap.js?id=1a94abb2d5270a12fa1f",
+    "/frontend/assets/libs/libs.js": "/frontend/assets/libs/libs.js?id=b2e459ce8f4d824894a0",
+    "/frontend/assets/js/libs.js": "/frontend/assets/js/libs.js?id=26188d7d3b2ad40637f8",
+    "/frontend/assets/js/scripts.js": "/frontend/assets/js/scripts.js?id=5cfec0d734b108a234df",
     "/backend/assets/css/libs.css": "/backend/assets/css/libs.css?id=790880667e562a5b1173",
     "/backend/assets/js/jquery.js": "/backend/assets/js/jquery.js?id=378087a64e1394fc51f3",
     "/backend/assets/js/login.js": "/backend/assets/js/login.js?id=0c8942aba8087ba3cb85",
     "/backend/assets/js/libs.js": "/backend/assets/js/libs.js?id=5de1053c936a23ebc2fb",
-    "/backend/assets/js/scripts.js": "/backend/assets/js/scripts.js?id=5daa59d089a0e8d0ad75"
+    "/backend/assets/js/scripts.js": "/backend/assets/js/scripts.js?id=5d0d92e7c3a53ecbeabb"
 }

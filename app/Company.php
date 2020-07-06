@@ -23,8 +23,8 @@ class Company extends Model
     'city',
     ];
 
-    public function user(){
-        return $this->belongsTo(User::class,'user', 'id');
+    public function owner(){
+        return $this->hasOne(User::class,'id', 'user');
     }
 
     public function setDocumentCompanyAttribute($value)

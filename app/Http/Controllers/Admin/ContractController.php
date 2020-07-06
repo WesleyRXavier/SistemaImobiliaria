@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\User;
 use App\Property;
+use App\Contract;
 use Illuminate\Http\Request;
 use App\Http\Requests\Admin\Contract as ContractRequest;
 
@@ -17,7 +18,10 @@ class ContractController extends Controller
      */
     public function index()
     {
-        return view('admin.contracts.index');
+        $contracts = Contract::with('ownerObject')->orderBy('id', 'DESC')->get();
+        return view('admin.contracts.index',[
+            'contracts'=>$contracts
+        ]);
     }
 
     /**
@@ -43,7 +47,12 @@ class ContractController extends Controller
      */
     public function store(ContractRequest $request)
     {
-        var_dump($request->all());
+        
+        $contractCreate = Contract::create($request->all());
+
+        return redirect()->route('admin.contracts.edit', [
+            'contract' => $contractCreate->id
+        ])->with(['color' => 'green', 'message' => 'Contrato cadastrado com sucesso!']);
         
     }
 
@@ -66,7 +75,15 @@ class ContractController extends Controller
      */
     public function edit($id)
     {
-        //
+        $contract = Contract::where('id', $id)->first();
+        $lessors = User::lessors();
+        $lessees = User::lessees();
+
+        return view('admin.contracts.edit', [
+            'contract' => $contract,
+            'lessors' => $lessors,
+            'lessees' => $lessees,
+        ]);
     }
 
     /**
@@ -76,9 +93,28 @@ class ContractController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ContractRequest $request, $id)
     {
-        //
+        
+        $contract = Contract::where('id', $id)->first();
+        $contract->fill($request->all());
+        $contract->save();
+
+        if($request->property) {
+            $property = Property::where('id', $request->property)->first();
+
+            if($request->status === 'active') {
+                $property->status = 0;
+                $property->save();
+            } else {
+                $property->status = 1;
+                $property->save();
+            }
+        }
+
+        return redirect()->route('admin.contracts.edit', [
+            'contract' => $contract->id
+        ])->with(['color' => 'green', 'message' => 'Contrato editado com sucesso!']);
     }
 
     /**

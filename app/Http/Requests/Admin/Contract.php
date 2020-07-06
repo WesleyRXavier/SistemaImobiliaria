@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Requests\Admin;
-
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+
 
 class Contract extends FormRequest
 {
@@ -24,8 +24,10 @@ class Contract extends FormRequest
      */
     public function rules()
     {
+        
         return [
-            'rent' => 'different:sale',
+            
+           // 'rent' => 'different:sale',
             'owner' => 'required',
             'acquirer' => 'required|different:owner',
             'sale_price' => 'required_if:sale,on',
