@@ -12,7 +12,7 @@
         "coffeecode/cropper": "^1.0",
         "coffeecode/optimizer": "^1.0",
         "fideloper/proxy": "^4.0",
-        "laravel/framework": "5.7.*",
+        "laravel/framework": "5.8.*",
         "laravel/tinker": "^1.0",
         "kylekatarnls/update-helper": "^1",
         "tymon/jwt-auth": "1.0.0-rc.4.1"
